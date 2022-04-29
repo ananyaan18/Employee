@@ -6,19 +6,29 @@ public class Employee {
 	protected int employeeId;
 	protected float salary;  
 	protected String name;
-	private String department, email;  
+	protected String department, email;  
 	
 	public Employee() {
 		this.employeeId=0;
 		this.salary=0.00f;
-		this.name=this.department=this.email="";
+		this.name="";
+		this.department="";
+		this.email="";
 		}
 	
-	Employee(int employeeId, String name,float salary)  //Constructor overloading
+	Employee(int employeeId, String name,float salary) 
 	{
 		this.employeeId=employeeId;
 		this.name=name;
 		this.salary=salary;
+	}
+	Employee(int employeeId, String name,float salary, String department, String email) 
+	{
+		this.employeeId=employeeId;
+		this.name=name;
+		this.salary=salary;
+		this.department=department;
+		this.email=email;
 	}
 	  
 	Employee(String name,float salary)
@@ -27,12 +37,24 @@ public class Employee {
 	     this.name = name;
 	     this.salary = salary;
 	}
-	//Getter and setters 
+	 
+	public int getId() {
+		return employeeId;
+	}
+	public void setId(int employeeId) {
+		this.employeeId = employeeId;
+	}
 	public String getName() {  
 	    return name;  
 	}
+	public void setName(String name) {
+		this.name=name;
+	}
 	public float getSalary() {  
 	    return salary;
+	}
+	public void setSalary(float salary) {
+		this.salary=salary;
 	}
 	
 	public String getDepartment() {  
@@ -67,7 +89,7 @@ public class Employee {
 	
 	public void checkIsValidEmail(String email) {
 		if(!(isValid(email)))
-			System.out.println(email + " is not valid. Enter Valid Email");
+			System.out.println(email + " is not a valid mail id. Enter Valid Email");
 	}
 	
 	public float getBonus(float salary)
