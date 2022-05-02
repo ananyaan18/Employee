@@ -12,7 +12,9 @@ public class Test {
         		+ "\n6. Exit ");
     }
 	
-	public static void main(String[] args) {  
+
+	
+	public static void main(String[] args) throws IdNotPresentException {  
 	
 	Employee emp1 = new Employee(123,"Any",50000);
 	Employee emp2 = new Employee(456,"Mahi",60000);

@@ -29,6 +29,22 @@ HashSet<Employee> empset=new HashSet<Employee>();
 		
 	}
 	
+	public int getIntegerInput() throws NotANumberException {
+        Scanner input = new Scanner(System.in);
+        try {
+           return input.nextInt();
+        } catch( InputMismatchException e) {
+            throw new NotANumberException();
+        }
+    }
+	public float getFloatInput() throws NotANumberException {
+        Scanner input = new Scanner(System.in);
+        try {
+           return input.nextFloat();
+        } catch( InputMismatchException e) {
+            throw new NotANumberException();
+        }
+    }
 	
 	public void viewAllEmps() {
 		for(Employee emp:empset) {
@@ -52,17 +68,18 @@ HashSet<Employee> empset=new HashSet<Employee>();
 		}
 	}
 	//update employee details
-	public void updateEmployee() {
+	public void updateEmployee() throws NotANumberException {
 			
 		 try {
 			 	System.out.println("Enter id: ");
-			 	employeeId=sc.nextInt();
+			 	employeeId=getIntegerInput();
 	        
 	            if( employeeId < 0 )
 	                throw new Exception("The Employee Id must be positive");
 	        }
-		 catch(InputMismatchException imexc) {
-	            System.out.println("Invalid Employee Number");
+			catch(NotANumberException e) {
+	            System.out.println(e.getMessage());
+
 		 }
 	     catch(Exception exc) {
 	            System.out.println(exc.getMessage());
@@ -97,7 +114,7 @@ HashSet<Employee> empset=new HashSet<Employee>();
 		}
 	}
 	
-	public void deleteEmp() {
+	public void deleteEmp() throws IdNotPresentException {
 		System.out.println("Enter id");
 		employeeId=sc.nextInt();
 		boolean found=false;
@@ -108,25 +125,23 @@ HashSet<Employee> empset=new HashSet<Employee>();
 				found=true;
 			}
 		}
-		if(!found) {
-			System.out.println("Employee Id is not present");
+		if(found) {
+		empset.remove(empdelete);
+		System.out.println("Employee details are deleted successfully");
 		}
-		else {
-			empset.remove(empdelete);
-			System.out.println("Employee details are deleted successfully");
-		}
+		else 
+			throw new IdNotPresentException("Id is not present");
 	}
-	
-	public void addEmp() {
+
+	public void addEmp() throws NotANumberException {
 		try {
 		 	System.out.println("Enter id: ");
-		 	employeeId=sc.nextInt();
-        
+		 	employeeId=getIntegerInput();  
             if( employeeId < 0 )
                 throw new Exception("The Employee Id must be positive");
         }
-		catch(InputMismatchException imexc) {
-	            System.out.println("Invalid Employee Number");
+		catch(NotANumberException e) {
+	            System.out.println(e.getMessage());
 		}
         catch(Exception exc) {
             System.out.println(exc.getMessage());
@@ -137,14 +152,14 @@ HashSet<Employee> empset=new HashSet<Employee>();
 		name=sc.next();
 		try {
 		 	System.out.println("Enter Employee Salary: ");
-		 	salary=sc.nextInt();
+		 	salary=getFloatInput();
         
             if( salary < 0 )
                 throw new Exception("The Employee salary must be positive");
         }
-		catch(InputMismatchException imexc) {
-	            System.out.println("Invalid Employee Salary");
-		}
+		 catch(NotANumberException e){
+		        System.out.println(e.getMessage());
+		    }
         catch(Exception exc) {
             System.out.println(exc.getMessage());
         }
@@ -155,7 +170,8 @@ HashSet<Employee> empset=new HashSet<Employee>();
 			
 		
 		Employee emp=new Employee(employeeId, name, salary,department,email);
-		emp.checkIsValidEmail(email);
+		emp.checkIsValidEmail(emp.getEmail());
+		 
 		empset.add(emp);
 		System.out.println(emp);
 		System.out.println("Employee details have been added successfully");
